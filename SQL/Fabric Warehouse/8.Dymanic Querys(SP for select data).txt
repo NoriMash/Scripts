@@ -1,0 +1,17 @@
+--Dymanic Querys
+--Acceder a datos a través de Store Procedure
+
+CREATE PROCEDURE sp_TopTenRows @tableName NVARCHAR(128)
+AS
+BEGIN
+    DECLARE @query NVARCHAR(MAX);
+    SET @query = N'SELECT TOP 10 * FROM ' + QUOTENAME(@tableName);
+    EXEC sp_executesql @query;
+END;
+
+
+
+--comments:
+En este ejemplo, @tableName es el parámetro que puedes reemplazar con el nombre de la tabla que deseas inspeccionar. La función QUOTENAME se utiliza para citar de manera segura el nombre de la tabla, previniendo ataques de inyección SQL. Luego, el procedimiento almacenado sp_executesql se utiliza para ejecutar la consulta construida dinámicamente.
+
+Ten en cuenta que este es un ejemplo simple y las tareas de almacenes de datos en el mundo real podrían requerir consultas SQL dinámicas más complejas. Siempre ten precaución al usar SQL dinámico debido al riesgo de ataques de inyección SQL. Siempre utiliza métodos de parametrización como sp_executesql o QUOTENAME para sanitizar las entradas.

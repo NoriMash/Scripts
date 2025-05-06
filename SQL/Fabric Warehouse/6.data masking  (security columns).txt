@@ -1,0 +1,34 @@
+#data masking on the CustomerName, Email, PhoneNumber, and CreditCardNumber columns
+
+-- For Email
+ALTER TABLE Customers
+ALTER COLUMN Email ADD MASKED WITH (FUNCTION = 'email()');
+
+-- For PhoneNumber
+ALTER TABLE Customers
+ALTER COLUMN PhoneNumber ADD MASKED WITH (FUNCTION = 'partial(0,"XXX-XXX-",4)');
+
+-- For CreditCardNumber
+ALTER TABLE Customers
+ALTER COLUMN CreditCardNumber ADD MASKED WITH (FUNCTION = 'partial(0,"XXXX-XXXX-XXXX-",4)');
+
+#resultados
+CustomerName: John Doe
+Email: j*****@contoso.com
+PhoneNumber: XXX-XXX-7890
+CreditCardNumber: XXXX-XXXX-XXXX-3456
+
+-- Al momento de crear las tablas también se pueden aplicar mascaras:
+
+CREATE TABLE dbo.Customers
+(   
+    CustomerID INT NOT NULL,   
+    FirstName varchar(50) MASKED WITH (FUNCTION = 'partial(1,"XXXXXXX",0)') NULL,     
+    LastName varchar(50) NOT NULL,     
+    Phone varchar(20) MASKED WITH (FUNCTION = 'default()') NULL,     
+    Email varchar(50) MASKED WITH (FUNCTION = 'email()') NULL   
+);
+
+-- Dar acceso a un usuario especfifco:
+
+ GRANT UNMASK ON dbo.Customers TO [nmashiro@piconsulting.com.ar];

@@ -1,0 +1,6 @@
+Obtain emails from list distribution
+Version1 :
+Get-DistributionGroupMember -Identity "MyDistributionList" | Select Name, PrimarySMTPAddress | Export-CSV "C:\Users\inema\Desktop\testDL3.csv" -NoTypeInformation -Encoding UTF8
+
+Version2 :
+Get-DistributionGroupMember -Identity "IT Administrators" | Format-Table Name,PrimarySMTPAddress,RecipientType

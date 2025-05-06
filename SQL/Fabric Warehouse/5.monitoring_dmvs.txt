@@ -1,0 +1,32 @@
+#details of all connections to the data warehouse.
+SELECT * FROM sys.dm_exec_connections;
+
+# show details of all authenticated sessions.
+SELECT * FROM sys.dm_exec_sessions;
+
+#show details of all requests being executed in the data warehouse.
+SELECT * FROM sys.dm_exec_requests;
+
+#details of all running queries in the database (including this one).
+SELECT connections.connection_id,
+ sessions.session_id, sessions.login_name, sessions.login_time,
+ requests.command, requests.start_time, requests.total_elapsed_time
+FROM sys.dm_exec_connections AS connections
+INNER JOIN sys.dm_exec_sessions AS sessions
+    ON connections.session_id=sessions.session_id
+INNER JOIN sys.dm_exec_requests AS requests
+    ON requests.session_id = sessions.session_id
+WHERE requests.status = 'running'
+    AND requests.database_id = DB_ID()
+ORDER BY requests.total_elapsed_time DESC;
+
+## Explore query insights
+
+#details of previously executed queries.
+SELECT * FROM queryinsights.exec_requests_history;
+
+#show details of frequently run queries.
+SELECT * FROM queryinsights.frequently_run_queries;
+
+#show details of all queries and their durations
+SELECT * FROM queryinsights.long_running_queries;

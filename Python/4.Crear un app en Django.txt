@@ -1,0 +1,33 @@
+#Crear un app en Django
+
+1.Crear un entorno virtual
+py -m venv envs\my_blog
+
+2.Activar entorno virtual
+envs\my_blog\Scripts\activate
+
+3.Instalar Django
+pip install django
+
+4.Crear proyecto en django
+django-admin startproject my_blog
+
+5.Entrar a la carpeta del proyecto y correr el server
+cd my_blog
+py manage.py runserver
+
+6.Va a pedir migrar asi que migramos
+py manage.py migrate
+
+7.Crear superusuario
+py manage.py createsuperuser
+
+8. Completar usuario , correo y password
+
+9. Levantamos el sevidor nuevamente
+py manage.py runserver
+
+10. Ingresamos a la ruta 127.0.0.1:8000/admin . Ingresamos con las credenciales de superuser
+
+11. Podemos levantar un app desde el terminal
+py manage.py startapp posts

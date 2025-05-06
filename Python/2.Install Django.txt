@@ -1,0 +1,13 @@
+Install Django
+
+1. Instalar entorno virtual
+
+...\> py -m venv project-name
+
+2. Activar entorno virtual
+
+...\> project-name\Scripts\activate.bat
+
+3. Instalar Django
+
+...\> py -m pip install Django

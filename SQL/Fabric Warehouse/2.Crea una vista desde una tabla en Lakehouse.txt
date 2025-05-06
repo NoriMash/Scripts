@@ -1,0 +1,6 @@
+#Crea una vista desde una tabla en Lakehouse.
+#La tabla del lakehouse es de un descargado de la ruta: https://github.com/MicrosoftLearning/dp-data/raw/main/sales.csv
+ 
+CREATE VIEW Sales.Staging_Sales
+ AS
+ SELECT * FROM [<your lakehouse name>].[dbo].[staging_sales];

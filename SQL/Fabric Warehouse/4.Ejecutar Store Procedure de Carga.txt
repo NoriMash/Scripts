@@ -1,0 +1,3 @@
+#Ejecutar Store Procedure de Carga con Parametro
+
+ EXEC Sales.LoadDataFromStaging 2021

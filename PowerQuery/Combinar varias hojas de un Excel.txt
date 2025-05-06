@@ -1,0 +1,16 @@
+PowerQuery Combinar varias hojas de Excel una sola consulta
+
+= Excel.Workbook(File.Contents("C:\Users\norim\Desktop\borrar\test\astxrang 01V2 - copia.xlsx"),null,true)
+
+## Lo que esta entre comillas es el path de la ruta del archivo
+## Luego filtrar en Kind los que solo sean tipo Sheet
+
+= Table.SelectRows(Source, each ([Kind] = "Sheet"))
+
+## Luego es necesario promover las columnas, para eso crear una nueva custom Column y escribir esto
+
+Table.PromoteHeaders([Data])
+
+##o si no en la linea de funciones fx poner:
+
+= Table.AddColumn(#"Filtered Rows", "Custom", each Table.PromoteHeaders([Data]))

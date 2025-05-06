@@ -1,0 +1,18 @@
+1.Validar los accesos al Synapse y al AAS.
+2.Abri el AAS y PoweBI en blanco y copiar los PQ
+3.Validar el PQ de la conexión a Synapse, la parte de source : Ejm:
+VStudio:
+let
+    Source = #"SQL/mmgbsoaaasa01e1 sql azuresynapse net;SQLDW",.....
+PBImport:
+let
+    Source = Sql.Database("mmgbsoaaasa01e1.sql.azuresynapse.net", "SQLDW"),....
+4.Abrir el powerbi con la conexión live connectio al SSAS.
+5.Abrir Tabular Editor del PBI en Blanco y el PBI de la conexión actual.
+4.Con Tabular Editar copiar primero las columnas calculadas.
+5.Luego las relaciones
+6.Luego las medidas
+7.Publicar el modelo Semántico
+8.Agregar la conexión en el Service dado que es modelo importado desde Synapse
+8.Abrir el PowerBI que tiene LiveConnection al SSAS y cambiarlo al modelo semántico, según los pasos de este link: https://www.reddit.com/r/PowerBI/comments/1h3gif3/easy_way_to_swap_connection_from_ssasaas_to/
+ 

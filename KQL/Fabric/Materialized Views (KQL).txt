@@ -1,0 +1,16 @@
+-- Materialized Views (KQL)
+
+.create materialized-view TripsByVendor on table Automotive
+{
+    Automotive
+    | summarize trips = count() by vendor_id, pickup_date = format_datetime(pickup_datetime, "yyyy-MM-dd")
+}
+
+-- Esto no populate data en la vista inmediatamente con los datos existentes en la tabla Automotive, para hacer eso se necesita la opción backfill
+
+.create async materialized-view with (backfill=true)
+TripsByVendor on table Automotive
+{
+    Automotive
+    | summarize trips = count() by vendor_id, pickup_date = format_datetime(pickup_datetime, "yyyy-MM-dd")
+}

@@ -1,0 +1,6 @@
+## Activar Entorno Virtual con Python en Windows
+
+Abre el CMD y ubícate en la carpeta en donde quieres crear el entorno virtual
+Ejecuta python -m venv mi_entorno
+Ejecuta mi_entorno\Scripts\actívate
+

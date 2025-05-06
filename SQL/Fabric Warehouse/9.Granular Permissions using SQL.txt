@@ -1,0 +1,6 @@
+-- Granular permissions using T-SQL
+
+DENY SELECT on dbo.Parts to [<username>@<your_domain>.com];
+
+GRANT EXECUTE on dbo.sp_PrintMessage to [<username>@<your_domain>.com];
+

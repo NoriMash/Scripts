@@ -1,0 +1,71 @@
+1. Mostrar Catalogos
+%sql
+SHOW CATALOGS
+
+2. Usar un Catalogo
+%sql
+USE CATALOG spark_catalog;
+
+3. Crear un Squema y usarlo
+%sql
+CREATE SCHEMA IF NOT EXISTS test_schema;
+USE SCHEMA test_schema;
+
+4. Crear tabla en el esquema:
+%sql
+USE SCHEMA test_schema;
+
+CREATE TABLE IF NOT EXISTS tb_test (
+  id INT NOT NULL,
+  name STRING NOT NULL
+);
+
+INSERT INTO tb_test VALUES ( 1,"Nori"),(2,"Agus"),(3,"Pablo");
+
+5. Poner los usuarios en un dataframe:
+from pyspark.sql.functions import asc, col, lit, split, when
+
+df_users = spark.sql("SHOW USERS")\
+    .select(
+        col('name').alias('user'),
+        lit('user').alias('group')
+    )
+
+display(df_users)
+
+6. Poner los grupos en un dataframe:
+df_groups = spark.sql("SHOW GROUPS")\
+    .select(
+        col('name').alias('group')
+    )
+
+display(df_groups)
+
+7. Poner el df de usuarios en una lista:
+list_users = [row[0] for row in df_users.collect()]
+
+list_users
+
+8. Juntar los usuarios con los grupos:
+df_users_in_groups = None
+_df = None
+
+for user in list_users:
+    _df = spark.sql(f"SHOW GROUPS WITH USER `{user}`")\
+        .select(
+            col('name').alias('group'),
+            lit(user).alias('user'),
+            col('directGroup').alias('is_direct_group')
+            )
+    
+    try:
+        df_users_in_groups = df_users_in_groups.union(_df)
+    except AttributeError as e:
+        # Catching this AttributeError: 'NoneType' object has no attribute 'union'
+        df_users_in_groups = _df
+    except:
+        raise
+
+display(df_users_in_groups)
+
+# referencia: https://datamadness.medium.com/pyspark-get-user-table-permissions-in-databricks-edcfb42bdea

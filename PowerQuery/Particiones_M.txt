@@ -1,0 +1,19 @@
+----partición prev year -------
+
+let
+    Source = #"SQL/mmgbsoaaasa01e3 sql azuresynapse net;sqldw",
+    LOGGERNET_TBD_GASES = Source{[Schema="LOGGERNET",Item="TBD_GASES"]}[Data],
+    td = Table.TransformColumnTypes(LOGGERNET_TBD_GASES,{{"hour", type time}}),
+    #"Filtered Rows1" = Table.SelectRows(td, each  Date.Year( [Date]) < Date.Year( DateTime.LocalNow())  )
+in
+    #"Filtered Rows1"
+
+
+----particiones meses actual year -------
+let
+    Source = #"SQL/mmgbsoaaasa01e3 sql azuresynapse net;sqldw",
+    LOGGERNET_TBD_GASES = Source{[Schema="LOGGERNET",Item="TBD_GASES"]}[Data],
+    td = Table.TransformColumnTypes(LOGGERNET_TBD_GASES,{{"hour", type time}}),
+   #"Filtered Rows1" = Table.SelectRows(td, each Date.Year( [Date]) = Date.Year( DateTime.LocalNow()) and Date.Month( [Date]) = 1 )
+in
+ #"Filtered Rows1"

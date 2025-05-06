@@ -1,0 +1,32 @@
+-- CLS (Column Level Security) in WH Fabric
+Supongamos una tabla llamada Patients with the following columns: PatientID, Name, Address, DateOfBirth, and MedicalHistory.
+
+1.Identificamos la columna sensitiva : MedicalHistory
+2. Definimos roles de acceso como Doctor, Nurse, Recepcionist y Patient
+3. Asignamos esos roles a usuarios
+4. Implementamos el control de acceso basada en la columna MedicalHistory
+
+-- Create roles
+CREATE ROLE Doctor AUTHORIZATION dbo;
+CREATE ROLE Nurse AUTHORIZATION dbo;
+CREATE ROLE Receptionist AUTHORIZATION dbo;
+CREATE ROLE Patient AUTHORIZATION dbo;
+GO
+
+-- Grant SELECT on all columns to all roles
+GRANT SELECT ON dbo.Patients TO Doctor;
+GRANT SELECT ON dbo.Patients TO Nurse;
+GRANT SELECT ON dbo.Patients TO Receptionist;
+GRANT SELECT ON dbo.Patients TO Patient;
+GO
+
+-- Deny SELECT on the MedicalHistory column to the Receptionist and Patient roles
+DENY SELECT ON dbo.Patients (MedicalHistory) TO Receptionist;
+DENY SELECT ON dbo.Patients (MedicalHistory) TO Patient;
+GO
+
+--TAMBIEN SE PUEDE DENEGAR A UN CORREO ESPECIFICO
+
+DENY SELECT ON dbo.Orders (CreditCard) TO [nmashiro@piconsulting.com.ar];
+
+
