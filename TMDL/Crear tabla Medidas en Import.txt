@@ -1,0 +1,19 @@
+createOrReplace
+
+	table M
+
+		measure 'Sales Amount' = SUM(fact_ventas[TotalSale])
+			formatString: #,0.00
+
+		column Value
+			isHidden
+			formatString: 0
+			summarizeBy: none
+			isNameInferred
+			sourceColumn: [Value]
+
+			annotation SummarizationSetBy = User
+
+		partition M = calculated
+			mode: import
+			source = FILTER ( {BLANK()}, FALSE)
