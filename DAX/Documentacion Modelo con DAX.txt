@@ -1,0 +1,31 @@
+Dictionary = 
+var _medidas = 
+SELECTCOLUMNS(FILTER(INFO.VIEW.MEASURES(),[Table]<>"Dictionary" && NOT([IsHidden])),
+    "Type","Medidas",
+    "Name",[Name],
+    "Description", [Description],
+    "Location", [Table],
+    "Codigo", [Expression])
+var columnas = 
+SELECTCOLUMNS(FILTER(INFO.VIEW.COLUMNS(),[Table]<>"Dictionary" && NOT([IsHidden])),
+    "Type","Columnas",
+    "Name",[Name],
+    "Description", [Description],
+    "Location",[Table],
+    "Codigo", [Expression])
+var tablas =
+SELECTCOLUMNS(FILTER(INFO.VIEW.TABLES(),[Name]<>"Dictionary"&& [Name]<>"Medidas" && NOT([IsHidden])),
+    "Type","Tablas",
+    "Name",[Name],
+    "Description", [Description],
+    "Location",[blank],
+    "Codigo", [Expression])
+var relaciones =
+SELECTCOLUMNS(INFO.VIEW.RELATIONSHIPS(),
+    "Type","Relationship",
+    "Name",[Relationship],
+    "Description", [blank],
+    "Location", [blank],
+    "Codigo", [Relationship])
+
+RETURN UNION(_medidas,columnas,tablas,relaciones)
